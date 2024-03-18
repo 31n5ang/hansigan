@@ -19,24 +19,39 @@ const nodes = output;
 
 const TimeTable = (props) => {
     const theme = useTheme(timeTableTheme);
+    const onSelectChange = (action, state) => {
+        console.log(action, state)
+    }
+    const select = useRowSelect({nodes}, {
+        // onChange: onSelectChange
+    });
+    const onRowDoubleClick = (item, event) => {
+        console.log(item, event);
+    }
     return (
-        <Table data={{nodes}} theme={theme}>
+        <Table data={{nodes}} theme={theme} select={select}>
             {() => (
                 <React.Fragment>
                     <Header>
                         <HeaderRow>
-                            {category_use_id.map((i) => (
+                            {category_use_id.map((i, index) => (
                                 category_use_id.includes(i) ? (
-                                    <HeaderCell>{category[i]}</HeaderCell>
+                                    <HeaderCell key={index}>{category[i]}</HeaderCell>
                                 ) : null
                             ))}
                         </HeaderRow>
                     </Header>
                     <Body>
                         {Object.entries(nodes).map(([key, value]) => (
-                            <Row key={value.id} item={value}>
-                                {category_use_id.map((i) => (
-                                    <Cell>{value[category_en[i]]}</Cell>
+                            <Row
+                                key={value.id}
+                                item={value}
+                                onDoubleClick={(item, event) => {
+                                    console.log(item, event);
+                                }}
+                            >
+                                {category_use_id.map((i, index) => (
+                                    <Cell key={index}>{value[category_en[i]]}</Cell>
                                 ))}
                             </Row>
                         ))}
