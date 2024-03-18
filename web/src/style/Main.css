@@ -1,0 +1,13 @@
+.main-container {
+    width: 90%;
+    display: flex;
+    .TimeTable {
+        display: flex;
+        flex: 1;
+        height: 400px;
+    }
+    .TableCanvas {
+        display: flex;
+        flex: none;
+    }
+}
