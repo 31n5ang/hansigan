@@ -6,7 +6,10 @@ export const TimeTableTheme = {
         font-size: 12px;
     `,
     Table: `
-        grid-template-columns: repeat(${category_use_id.length}, minmax(auto, 120px));
+        // grid-template-columns: repeat(${category_use_id.length}, minmax(auto, 120px));
+        grid-template-columns: 
+            60px 35px 140px 35px 70px 100px 100px 35px 35px    
+        ;
     `,
     BaseCell: `
         padding: 3px;
