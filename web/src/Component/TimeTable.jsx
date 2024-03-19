@@ -8,26 +8,27 @@ import {
     HeaderCell,
     Cell,
 } from '@table-library/react-table-library/table';
-import { useRowSelect, SelectTypes } from "@table-library/react-table-library/select";
+import { useRowSelect } from "@table-library/react-table-library/select";
 import { useTheme } from "@table-library/react-table-library/theme";
 
 import {category, category_en, category_use_id} from "../data/category";
-import {timeTableTheme} from "../style/timeTableTheme";
+import {TimeTableTheme} from "../style/TimeTableTheme";
 
 import output from "../data/output.json";
 const nodes = output;
 
 const TimeTable = (props) => {
-    const theme = useTheme(timeTableTheme);
+    const {selectedRow, setSelectedRow, selectedRowList, setSelectedRowList} = props;
+    const theme = useTheme(TimeTableTheme);
     const onSelectChange = (action, state) => {
-        console.log(action, state)
+        if (state.id === null) setSelectedRow(null);
+        else {
+            setSelectedRow(output[state.id - 1]);
+        }
     }
     const select = useRowSelect({nodes}, {
-        // onChange: onSelectChange
+        onChange: onSelectChange
     });
-    const onRowDoubleClick = (item, event) => {
-        console.log(item, event);
-    }
     return (
         <Table data={{nodes}} theme={theme} select={select}>
             {() => (
@@ -47,7 +48,7 @@ const TimeTable = (props) => {
                                 key={value.id}
                                 item={value}
                                 onDoubleClick={(item, event) => {
-                                    console.log(item, event);
+                                    setSelectedRowList([...selectedRowList, item]);
                                 }}
                             >
                                 {category_use_id.map((i, index) => (
