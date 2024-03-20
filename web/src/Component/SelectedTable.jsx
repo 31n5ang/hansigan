@@ -7,11 +7,8 @@ import {TimeTableTheme} from "../style/TimeTableTheme";
 import {useTheme} from "@table-library/react-table-library/theme";
 const nodes = output;
 function SelectedTable(props) {
-    const {selectedRowList, setSelectedRowList} = props;
+    const {selectedRowList, setSelectedRowList, totalHak, setTotalHak} = props;
     const theme = useTheme(TimeTableTheme);
-    useEffect(() => {
-
-    }, []);
     return (
         <>
             <Table data={{nodes}} theme={theme}>
@@ -28,7 +25,13 @@ function SelectedTable(props) {
                         </Header>
                         <Body>
                             {Object.entries(selectedRowList).map(([key, value]) => (
-                                <Row key={value.id} item={value}>
+                                <Row key={value.id} item={value} onDoubleClick={(item, event) => {
+                                    const newSelectedRowList = selectedRowList.filter((selectedRow) => (
+                                        (item.id !== selectedRow.id)
+                                    ));
+                                    setSelectedRowList(newSelectedRowList);
+                                    setTotalHak(totalHak - item.hak);
+                                }}>
                                     {category_use_id.map((i, index) => (
                                         <Cell key={index}>{value[category_en[i]]}</Cell>
                                     ))}

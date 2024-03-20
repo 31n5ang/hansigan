@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
 import output from "../data/output.json";
-import {koreatech} from "../style/color";
+import {koreatech, pastelArray} from "../style/color";
+pastelArray.sort(() => Math.random() - 0.5);
 
 const TableCanvas = (props) => {
     const {selectedRow, setSelectedRow, selectedRowList, setSelectedRowList} = props;
@@ -11,6 +12,18 @@ const TableCanvas = (props) => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
+
+        // 캔버스 크기를 부모 요소에 맞게 조정
+        const parent = canvas.parentNode;
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
+
+        // 레티나 디스플레이를 고려하여 캔버스의 해상도를 조정
+        const scale = window.devicePixelRatio;
+        canvas.width *= scale;
+        canvas.height *= scale;
+        context.scale(scale, scale);
+
         const day = ["", "월", "화", "수", "목", "금"];
         const defaultLineWidth = 0.2;
         const timeTitle = [
@@ -34,23 +47,26 @@ const TableCanvas = (props) => {
             '09B 17:30',
         ];
 
-
-        // 캔버스 초기화
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        //캔버스 초기화
         context.lineWidth = defaultLineWidth;
+        context.clearRect(0, 0, canvas.width /scale, canvas.height / scale)
+        context.fillStyle = "white"
+        context.fillRect(0, 0, canvas.width / scale, canvas.height / scale);
+
 
         // 표 그리기
-        const cellWidth = canvas.width / day.length;
+        const cellWidth = canvas.width / day.length / scale;
         const cellHeight = 30;
         const startX = 0;
         const startY = 0;
 
         //영역표시
-        context.strokeRect(startX, startY, canvas.width, canvas.height);
+        context.strokeRect(startX, startY, canvas.width / scale, canvas.height / scale);
 
         // 월 화 수 목 금 타이틀 그리기
-        context.font = '15px Arial';
-        context.textAlign = 'center';
+        context.fillStyle = "black";
+        context.font = "15px sans-serif";
+        context.textAlign = "center";
         for (let i = 0; i < day.length; i++) {
             context.strokeRect(startX + cellWidth * i, startY, cellWidth, cellHeight);
             context.fillText(day[i], startX + cellWidth / 2 + cellWidth * i, startY + cellHeight / 2 + 5);
@@ -60,9 +76,42 @@ const TableCanvas = (props) => {
                 context.strokeRect(startX + cellWidth * j, startY + cellHeight * (i + 1), cellWidth, cellHeight);
             }
         }
+        // 시간 표시
         for (let i = 0; i < 18; i++) {
-            context.font = '13px Arial'
+            context.font = "13px sans-serif"
             context.fillText(timeTitle[i], startX + cellWidth / 2, startY + cellHeight * (i + 2) - 10);
+        }
+        /*
+         * 선택된 리스트 표시
+         */
+        for (let i = 0; i < selectedRowList.length; i++) {
+            const boxColor = pastelArray[i];
+            context.lineWidth = 0;
+            const times = selectedRowList[i].time;
+            for (let j = 0; j < times.length; j++) {
+                context.fillStyle = boxColor;
+                const time = times[j];
+                const d = day.indexOf(time.charAt(0));
+                const startT = Number(time.substring(1, 3));
+                const startTA = time.substring(3, 4);
+                const endT = Number(time.substring(5, 7));
+                const endTA = time.substring(7, 8);
+
+                const startBoxX = startX + cellWidth * d;
+                const startBoxY = startY + cellHeight * (1 + (startT - 1) * 2 + (startTA === 'A' ? 0 : 1));
+                const width = cellWidth;
+                const height = 2 * cellHeight * (endT + (endTA === 'A' ? 0 : 1) - (startT + ( startTA === 'A' ? 0 : 1)));
+                context.fillRect(startBoxX, startBoxY, width, height);
+                context.fillStyle = "black";
+                fillTextinBox(
+                    context,
+                    selectedRowList[i].title + '\n' + selectedRowList[i].part + " " + selectedRowList[i].prof,
+                    startBoxX,
+                    startBoxY + 15,
+                    cellWidth,
+                    4
+                );
+            }
         }
 
         /*
@@ -84,7 +133,7 @@ const TableCanvas = (props) => {
                 context.lineWidth = 2;
                 context.strokeStyle = koreatech.orange;
                 if (selectedRow.id === sameTitleRows[i].id) {
-                    context.lineWidth = 4;
+                    context.lineWidth = 6;
                     context.strokeStyle = koreatech.blue;
                 }
                 const times = sameTitleRows[i].time;
@@ -100,7 +149,6 @@ const TableCanvas = (props) => {
                     const startBoxY = startY + cellHeight * (1 + (startT - 1) * 2 + (startTA === 'A' ? 0 : 1));
                     const width = cellWidth;
                     const height = 2 * cellHeight * (endT + (endTA === 'A' ? 0 : 1) - (startT + ( startTA === 'A' ? 0 : 1)));
-
                     context.strokeRect(startBoxX, startBoxY, width, height);
                     // context.fillText(time, startBoxX, startBoxY);
                 }
@@ -108,8 +156,32 @@ const TableCanvas = (props) => {
                 context.strokeStyle = "black";
             }
         }
-    }, [selectedRow, setSelectedRowList]);
+    }, [selectedRow, selectedRowList]);
 
+    const fillTextinBox = (context, text, x, y, width, padding) => {
+        context.fillStyle = "black";
+        context.textAlign = "left";
+        context.font = '12px sans-serif'
+        const lines = text.split('\n');
+        let lineCount = 0;
+        let buf = "";
+        for (let k = 0; k < lines.length; k++) {
+            const line = lines[k];
+            for (let i = 0; i < line.length; i++) {
+                const char = line.charAt(i);
+                if (context.measureText(buf + char).width < width - padding) {
+                    buf += char
+                } else {
+                    context.fillText(buf, x + padding, y + 20 * lineCount++)
+                    buf = char;
+                }
+            }
+            if (buf.length > 0) {
+                context.fillText(buf, x + padding, y + 20 * lineCount++);
+                buf = "";
+            }
+        }
+    }
 
 
     return (

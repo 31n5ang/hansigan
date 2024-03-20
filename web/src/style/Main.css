@@ -1,11 +1,12 @@
 .content-container {
-    width: 1100px;
+    width: 1110px;
     display: flex;
     justify-content: center;
     margin: 0 auto;
+    margin-top: 20px;
 
     .TimeTable {
-        width: 590px;
+        width: 610px;
         display: flex;
         flex: none;
         max-height: 400px;
