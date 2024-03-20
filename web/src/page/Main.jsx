@@ -7,6 +7,7 @@ import {useState} from "react";
 import SelectedTable from "../Component/SelectedTable";
 import SearchForm from "../Component/SearchForm";
 import SelectedTableForm from "../Component/SelectedTableForm";
+import Header from "../Component/Header";
 
 function Main(props) {
     const [selectedRow, setSelectedRow] = useState();
@@ -20,6 +21,9 @@ function Main(props) {
     }
     return (
         <>
+            <div className="header-container">
+                <Header />
+            </div>
             <div className="content-container">
                 <div className="left-wrapper">
                     <div className="left-sf-tt-wrapper">

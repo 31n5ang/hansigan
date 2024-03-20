@@ -6,7 +6,7 @@ function SelectedTableForm(props) {
     }
     return (
         <div>
-            <button onClick={onClickClearButton}>비우기</button>
+            <button onClick={onClickClearButton}>비우기🗑</button>
             &nbsp;학점 : {totalHak}
         </div>
     )
