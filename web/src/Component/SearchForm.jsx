@@ -18,7 +18,7 @@ function SearchForm(props) {
     }
 
     return (
-        <div className="SearchForm">
+        <div>
             <input value={search} onChange={onChangeSearch} onKeyPress={onKeyPressEnter} placeholder="교과목명, 교수명 검색"/>
             <select onChange={onChangeDepartment}>
                 <option value="">개설학부</option>

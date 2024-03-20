@@ -1,7 +1,8 @@
 function SelectedTableForm(props) {
-    const {setSelectedRowList, totalHak} = props;
+    const {setSelectedRowList, totalHak, setTotalHak} = props;
     const onClickClearButton = (event) => {
         setSelectedRowList([]);
+        setTotalHak(0);
     }
     return (
         <div>

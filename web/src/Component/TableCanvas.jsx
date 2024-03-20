@@ -9,14 +9,15 @@ const TableCanvas = (props) => {
     const canvasRef = useRef(null);
     const nodes = output;
 
+
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
 
         // 캔버스 크기를 부모 요소에 맞게 조정
-        const parent = canvas.parentNode;
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
+        const {w, h} = canvas.getBoundingClientRect();
+        canvas.width = 500;
+        canvas.height = 650;
 
         // 레티나 디스플레이를 고려하여 캔버스의 해상도를 조정
         const scale = window.devicePixelRatio;

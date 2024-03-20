@@ -1,36 +1,42 @@
 .content-container {
-    width: 1110px;
+    width: 80%;
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
     margin: 0 auto;
     margin-top: 20px;
 
     .TimeTable {
-        width: 610px;
+        width: 100%;
         display: flex;
-        flex: none;
         max-height: 400px;
     }
-    .TableCanvas {
+    .tableCanvas {
         width: 500px;
         display: flex;
-        flex: none;
-        height: 650px;
-        margin-top: 20px    ;
+        margin: 0 auto;
+        margin-top: 20px;
     }
     .SelectedTable {
         display: flex;
-        flex: 1;
         max-height: 250px;
     }
     .time-table-wrapper {
-        width: auto;
-        height: 400px;
+        display: flex;
         border: 0.5px solid
     }
     .selected-table-wrapper {
         width: auto;
         height: 250px;
+        flex: 1;
         border: 0.5px solid;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+    }
+    .tableCanvas {
+        width: 100%;
     }
 }

@@ -1,7 +1,8 @@
 import TimeTable from "../Component/TimeTable";
 import TableCanvas from "../Component/TableCanvas";
 
-import "../style/Main.css"
+// import "../style/Main.css"
+import "../style/test.css"
 import {useState} from "react";
 import SelectedTable from "../Component/SelectedTable";
 import SearchForm from "../Component/SearchForm";
@@ -20,14 +21,16 @@ function Main(props) {
     return (
         <>
             <div className="content-container">
-                <div>
-                    <SearchForm
-                        search={search}
-                        setSearch={setSearch}
-                        searchDepartment={searchDepartment}
-                        setSearchDepartment={setSearchDepartment}
-                    />
-                    <div className="time-table-wrapper">
+                <div className="left-wrapper">
+                    <div className="left-sf-tt-wrapper">
+                        <div className="SearchForm">
+                            <SearchForm
+                                search={search}
+                                setSearch={setSearch}
+                                searchDepartment={searchDepartment}
+                                setSearchDepartment={setSearchDepartment}
+                            />
+                        </div>
                         <div className="TimeTable">
                             <TimeTable
                                 search={search}
@@ -43,11 +46,14 @@ function Main(props) {
                             />
                         </div>
                     </div>
-                    <SelectedTableForm
-                        setSelectedRowList={setSelectedRowList}
-                        totalHak={totalHak}
-                    />
-                    <div className="selected-table-wrapper">
+                    <div className="left-stf-st-wrapper">
+                        <div className="SelectedTableForm">
+                            <SelectedTableForm
+                                setSelectedRowList={setSelectedRowList}
+                                totalHak={totalHak}
+                                setTotalHak={setTotalHak}
+                            />
+                        </div>
                         <div className="SelectedTable">
                             <SelectedTable
                                 selectedRowList={selectedRowList}
@@ -58,7 +64,7 @@ function Main(props) {
                         </div>
                     </div>
                 </div>
-                <div className="TableCanvas" onMouseEnter={clearSelectedRow}>
+                <div className="right-wrapper" onMouseEnter={clearSelectedRow}>
                     <TableCanvas
                         selectedRow={selectedRow}
                         setSelectedRow={setSelectedRow}

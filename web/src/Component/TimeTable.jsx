@@ -71,7 +71,7 @@ const TimeTable = (props) => {
     }
     return (
         <React.Fragment>
-            <Table data={{nodes}} theme={theme} select={select}>
+            <Table data={{nodes}} theme={theme} select={select} layout={{isDiv: true, fixedHeader: true}}>
                 {() => (
                     <React.Fragment>
                         <Header>
