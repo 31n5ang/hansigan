@@ -104,7 +104,7 @@ const TableCanvas = (props) => {
                 const height = 2 * cellHeight * (endT + (endTA === 'A' ? 0 : 1) - (startT + ( startTA === 'A' ? 0 : 1)));
                 context.fillRect(startBoxX, startBoxY, width, height);
                 context.fillStyle = "black";
-                fillTextinBox(
+                fillTextInBox(
                     context,
                     selectedRowList[i].title + '\n' + selectedRowList[i].part + " " + selectedRowList[i].prof,
                     startBoxX,
@@ -159,7 +159,7 @@ const TableCanvas = (props) => {
         }
     }, [selectedRow, selectedRowList]);
 
-    const fillTextinBox = (context, text, x, y, width, padding) => {
+    const fillTextInBox = (context, text, x, y, width, padding) => {
         context.fillStyle = "black";
         context.textAlign = "left";
         context.font = '12px sans-serif'
@@ -186,7 +186,7 @@ const TableCanvas = (props) => {
 
 
     return (
-        <canvas ref={canvasRef} width={500} height={650} className="tableCanvas"></canvas>
+        <canvas ref={canvasRef} className="tableCanvas"></canvas>
     );
 };
 

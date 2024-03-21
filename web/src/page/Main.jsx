@@ -1,18 +1,19 @@
 import TimeTable from "../Component/TimeTable";
 import TableCanvas from "../Component/TableCanvas";
 
-// import "../style/Main.css"
-import "../style/test.css"
+import "../style/Main.css"
 import {useState} from "react";
 import SelectedTable from "../Component/SelectedTable";
 import SearchForm from "../Component/SearchForm";
 import SelectedTableForm from "../Component/SelectedTableForm";
 import Header from "../Component/Header";
+import Footer from "../Component/Footer";
 
 function Main(props) {
     const [selectedRow, setSelectedRow] = useState();
     const [selectedRowList, setSelectedRowList] = useState([]);
     const [selectedTimeList, setSelectedTimeList] = useState([]);
+    const [selectedListSelectedRow, setSelectedListSelectedRow] = useState();
     const [search, setSearch] = useState("");
     const [searchDepartment, setSearchDepartment] = useState("");
     const [totalHak, setTotalHak] = useState(0);
@@ -53,9 +54,16 @@ function Main(props) {
                     <div className="left-stf-st-wrapper">
                         <div className="SelectedTableForm">
                             <SelectedTableForm
+                                selectedRow={selectedRow}
+                                setSelectedRow={setSelectedRow}
+                                selectedRowList={selectedRowList}
                                 setSelectedRowList={setSelectedRowList}
                                 totalHak={totalHak}
                                 setTotalHak={setTotalHak}
+                                selectedTimeList={selectedTimeList}
+                                setSelectedTimeList={setSelectedTimeList}
+                                selectedListSelectedRow={selectedListSelectedRow}
+                                setSelectedListSelectedRow={setSelectedListSelectedRow}
                             />
                         </div>
                         <div className="SelectedTable">
@@ -64,6 +72,10 @@ function Main(props) {
                                 setSelectedRowList={setSelectedRowList}
                                 totalHak={totalHak}
                                 setTotalHak={setTotalHak}
+                                selectedTimeList={selectedTimeList}
+                                setSelectedTimeList={setSelectedTimeList}
+                                selectedListSelectedRow={selectedListSelectedRow}
+                                setSelectedListSelectedRow={setSelectedListSelectedRow}
                             />
                         </div>
                     </div>
@@ -76,6 +88,9 @@ function Main(props) {
                         setSelectedRowList={setSelectedRowList}
                     />
                 </div>
+            </div>
+            <div className="footer-container">
+                <Footer />
             </div>
         </>
     )

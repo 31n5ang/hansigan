@@ -42,33 +42,7 @@ const TimeTable = (props) => {
     const select = useRowSelect({nodes}, {
         onChange: onSelectChange
     });
-    const convertTimeToNumberArray = (time) => {
-        const days = ["", "월", "화", "수", "목", "금"];
-        const d = days.indexOf(time.charAt(0));
-        const startT = Number(time.substring(1, 3));
-        const startTA = time.substring(3, 4);
-        const endT = Number(time.substring(5, 7));
-        const endTA = time.substring(7, 8);
-        const num = endT + (endTA === 'A' ? 0 : 1) - (startT + ( startTA === 'A' ? 0 : 1))
-        const retTimes = [];
-        const parity = 50;
-        for (let i = 0; i < num * 2; i++) {
-            retTimes.push((i + (startT * 2 + (startTA === 'A' ? 0 : 1))) + (parity * (d - 1)));
-        }
-        return retTimes;
-    }
-    //중복 시간표 확인
-    const checkTimes = (times) => {
-        for (let i = 0; i < times.length; i++) {
-            const time = times[i];
-            const retTimes = convertTimeToNumberArray(time);
-            for (let j = 0; j < retTimes.length; j++) {
-                const currTime = retTimes[j];
-                if (selectedTimeList.includes(currTime)) return false;
-            }
-        }
-        return true;
-    }
+
     return (
         <React.Fragment>
             <Table data={{nodes}} theme={theme} select={select} layout={{isDiv: true, fixedHeader: true}}>
@@ -90,8 +64,7 @@ const TimeTable = (props) => {
                                     item={value}
                                     onDoubleClick={(item, event) => {
                                         const curTimes = item.time;
-                                        if (!checkTimes(curTimes)) {
-                                            // console.log(convertTimeToNumberArray(curTimes[0]));
+                                        if (!checkTimes(selectedTimeList, curTimes)) {
                                             alert("중복되는 시간이 있습니다.");
                                         } else {
                                             setSelectedRowList([...selectedRowList, item]);
@@ -120,5 +93,35 @@ const TimeTable = (props) => {
         </React.Fragment>
     )
 }
+
+export const convertTimeToNumberArray = (time) => {
+    const days = ["", "월", "화", "수", "목", "금"];
+    const d = days.indexOf(time.charAt(0));
+    const startT = Number(time.substring(1, 3));
+    const startTA = time.substring(3, 4);
+    const endT = Number(time.substring(5, 7));
+    const endTA = time.substring(7, 8);
+    const num = endT + (endTA === 'A' ? 0 : 1) - (startT + ( startTA === 'A' ? 0 : 1))
+    const retTimes = [];
+    const parity = 50;
+    for (let i = 0; i < num * 2; i++) {
+        retTimes.push((i + (startT * 2 + (startTA === 'A' ? 0 : 1))) + (parity * (d - 1)));
+    }
+    return retTimes;
+}
+
+//중복 시간표 확인
+export const checkTimes = (selectedTimeList, times) => {
+    for (let i = 0; i < times.length; i++) {
+        const time = times[i];
+        const retTimes = convertTimeToNumberArray(time);
+        for (let j = 0; j < retTimes.length; j++) {
+            const currTime = retTimes[j];
+            if (selectedTimeList.includes(currTime)) return false;
+        }
+    }
+    return true;
+}
+
 
 export default TimeTable;
