@@ -15,7 +15,6 @@ const TableCanvas = (props) => {
         const context = canvas.getContext('2d');
 
         // 캔버스 크기를 부모 요소에 맞게 조정
-        const {w, h} = canvas.getBoundingClientRect();
         canvas.width = 500;
         canvas.height = 650;
 
@@ -186,7 +185,7 @@ const TableCanvas = (props) => {
 
 
     return (
-        <canvas ref={canvasRef} className="tableCanvas"></canvas>
+        <canvas ref={canvasRef} width={500} height={650} className="tableCanvas"></canvas>
     );
 };
 
