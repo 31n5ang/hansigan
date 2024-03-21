@@ -185,7 +185,7 @@ const TableCanvas = (props) => {
 
 
     return (
-        <canvas ref={canvasRef} width={500} height={650} className="tableCanvas"></canvas>
+        <canvas ref={canvasRef} className="tableCanvas"></canvas>
     );
 };
 

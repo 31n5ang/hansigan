@@ -1,4 +1,4 @@
-function Header(props) {
+function MainHeader(props) {
     return (
         <div>
             한시간 - 한기대 시간표 도우미
@@ -6,4 +6,4 @@ function Header(props) {
     )
 }
 
-export default Header
+export default MainHeader

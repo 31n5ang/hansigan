@@ -6,8 +6,8 @@ import {useState} from "react";
 import SelectedTable from "../Component/SelectedTable";
 import SearchForm from "../Component/SearchForm";
 import SelectedTableForm from "../Component/SelectedTableForm";
-import Header from "../Component/Header";
-import Footer from "../Component/Footer";
+import MainHeader from "../Component/MainHeader";
+import MainFooter from "../Component/MainFooter";
 
 function Main(props) {
     const [selectedRow, setSelectedRow] = useState();
@@ -22,8 +22,8 @@ function Main(props) {
     }
     return (
         <>
-            <div className="header-container">
-                <Header />
+            <div className="main-header-container">
+                <MainHeader />
             </div>
             <div className="content-container">
                 <div className="left-wrapper">
@@ -89,8 +89,8 @@ function Main(props) {
                     />
                 </div>
             </div>
-            <div className="footer-container">
-                <Footer />
+            <div className="main-footer-container">
+                <MainFooter />
             </div>
         </>
     )

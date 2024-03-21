@@ -1,4 +1,4 @@
-function Footer(props) {
+function MainFooter(props) {
     return (
         <div>
             <a href="">도움말</a>
@@ -8,4 +8,4 @@ function Footer(props) {
     )
 }
 
-export default Footer;
+export default MainFooter;

@@ -8,6 +8,10 @@ function SelectedTableForm(props) {
         selectedListSelectedRow, setSelectedListSelectedRow
     } = props;
     const onClickClearButton = (event) => {
+        setSelectedTimeList([]);
+        setSelectedListSelectedRow(undefined);
+        setSelectedRowList([]);
+        setSelectedRow(undefined);
         setTotalHak(0);
     }
     const onClickAddButton = (event) => {
